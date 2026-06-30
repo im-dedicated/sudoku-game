@@ -1,4 +1,4 @@
-// Example puzzles (0 = empty cell)
+
 const puzzles = [
   [
     [5,3,0,0,7,0,0,0,0],
@@ -30,7 +30,7 @@ let timerInterval;
 
 function createBoard(puzzle) {
   const table = document.getElementById("sudoku-board");
-  table.innerHTML = ""; // clear old board
+  table.innerHTML = "";
 
   for (let row = 0; row < 9; row++) {
     const tr = document.createElement("tr");
@@ -71,18 +71,18 @@ function checkSolution() {
     }
   }
 
-  // Check rows
+  
   for (let r = 0; r < 9; r++) {
     if (hasDuplicates(grid[r])) valid = false;
   }
 
-  // Check columns
+  
   for (let c = 0; c < 9; c++) {
     const col = grid.map(row => row[c]);
     if (hasDuplicates(col)) valid = false;
   }
 
-  // Check 3x3 blocks
+  
   for (let br = 0; br < 9; br += 3) {
     for (let bc = 0; bc < 9; bc += 3) {
       const block = [];
@@ -111,11 +111,11 @@ function highlightErrors(grid) {
   for (let r = 0; r < 9; r++) {
     for (let c = 0; c < 9; c++) {
       const input = table.rows[r].cells[c].firstChild;
-      input.style.color = "black"; // reset
+      input.style.color = "black"; 
     }
   }
 
-  // Highlight duplicates in rows
+  
   for (let r = 0; r < 9; r++) {
     const seen = {};
     for (let c = 0; c < 9; c++) {
@@ -152,6 +152,6 @@ function resetTimer() {
   }, 1000);
 }
 
-// Initialize game
+
 createBoard(puzzles[currentPuzzle]);
 resetTimer();
