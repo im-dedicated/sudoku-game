@@ -120,5 +120,9 @@ function newGame() {
   createBoard(); // load another puzzle
 }
 
+function resetBoard() {
+  const inputs = document.querySelectorAll("input:not([disabled])");
+  inputs.forEach(inp => inp.value = "");
+}
 
 createBoard();
