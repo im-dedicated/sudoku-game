@@ -1,10 +1,10 @@
 body {
   font-family: Arial, sans-serif;
   text-align: center;
-  background-image: url("background.webp"); /* make sure this file exists in your repo */
-  background-size: cover;       /* cover the whole screen */
-  background-position: center;  /* center the image */
-  background-attachment: fixed; /* keep it fixed when scrolling */
+  background-image: url("background.webp");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
 }
 
 h1 {
@@ -15,7 +15,7 @@ h1 {
 table {
   border-collapse: collapse;
   margin: 20px auto;
-  background-color: rgba(255, 255, 255, 0.85); /* semi-transparent background */
+  background-color: rgba(255, 255, 255, 0.85); 
   border-radius: 8px;
 }
 
