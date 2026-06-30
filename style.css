@@ -1,14 +1,21 @@
 body {
   font-family: Arial, sans-serif;
   text-align: center;
-  background-image: url("background.webp"); /* put your image file in the repo */
-  background-size: cover;   /* makes the image cover the whole screen */
-  background-position: center; /* centers the image */
-  background-attachment: fixed; /* keeps it fixed when scrolling */
+  background-image: url("background.jpg"); /* replace with your image file */
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+h1 {
+  color: #222;
+  margin-top: 20px;
 }
 
 table {
-  background-color: rgba(255, 255, 255, 0.85);
+  border-collapse: collapse;
+  margin: 20px auto;
+  background-color: rgba(255, 255, 255, 0.85); /* semi-transparent */
   border-radius: 8px;
 }
 
@@ -24,10 +31,7 @@ input {
   text-align: center;
   font-size: 18px;
   border: none;
-}
-
-input:hover {
-  background-color: #f0f8ff;
+  background: transparent;
 }
 
 td:nth-child(3n) {
@@ -35,4 +39,15 @@ td:nth-child(3n) {
 }
 tr:nth-child(3n) td {
   border-bottom: 2px solid black;
+}
+
+button {
+  margin: 5px;
+  padding: 8px 15px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+input:hover {
+  background-color: #f0f8ff;
 }
