@@ -28,7 +28,6 @@ let currentPuzzle = 0;
 let seconds = 0;
 let timerInterval;
 
-
 function createBoard(puzzle) {
   const table = document.getElementById("sudoku-board");
   table.innerHTML = ""; // clear old board
@@ -54,14 +53,15 @@ function createBoard(puzzle) {
   }
 }
 
-
+function hasDuplicates(arr) {
+  const nums = arr.filter(n => n !== 0);
+  return new Set(nums).size !== nums.length;
+}
 
 function checkSolution() {
-  highlightErrors();
   const table = document.getElementById("sudoku-board");
   let valid = true;
 
-  // Collect values
   const grid = [];
   for (let r = 0; r < 9; r++) {
     grid[r] = [];
@@ -71,20 +71,18 @@ function checkSolution() {
     }
   }
 
-  function hasDuplicates(arr) {
-    const nums = arr.filter(n => n !== 0);
-    return new Set(nums).size !== nums.length;
-  }
-
+  // Check rows
   for (let r = 0; r < 9; r++) {
     if (hasDuplicates(grid[r])) valid = false;
   }
 
+  // Check columns
   for (let c = 0; c < 9; c++) {
     const col = grid.map(row => row[c]);
     if (hasDuplicates(col)) valid = false;
   }
 
+  // Check 3x3 blocks
   for (let br = 0; br < 9; br += 3) {
     for (let bc = 0; bc < 9; bc += 3) {
       const block = [];
@@ -97,30 +95,34 @@ function checkSolution() {
     }
   }
 
-  if (valid) {
-    alert("No duplicates! Keep going.");
+  highlightErrors(grid);
+
+  if (valid && grid.flat().every(n => n !== 0)) {
+    alert("🎉 Congratulations! You solved the puzzle!");
+  } else if (valid) {
+    alert("No duplicates yet, keep going!");
   } else {
     alert("There are mistakes in your solution.");
   }
 }
 
-function highlightErrors() {
+function highlightErrors(grid) {
   const table = document.getElementById("sudoku-board");
   for (let r = 0; r < 9; r++) {
     for (let c = 0; c < 9; c++) {
       const input = table.rows[r].cells[c].firstChild;
-      input.style.color = "red"; // reset
+      input.style.color = "black"; // reset
     }
   }
 
-  // Example: highlight duplicates in rows
+  // Highlight duplicates in rows
   for (let r = 0; r < 9; r++) {
     const seen = {};
     for (let c = 0; c < 9; c++) {
-      const val = table.rows[r].cells[c].firstChild.value;
+      const val = grid[r][c];
       if (val) {
         if (seen[val]) {
-          table.rows[0].cells[0].firstChild.style.color = "red";
+          table.rows[r].cells[c].firstChild.style.color = "red";
         }
         seen[val] = true;
       }
@@ -128,14 +130,8 @@ function highlightErrors() {
   }
 }
 
-let seconds = 0;
-setInterval(() => {
-  seconds++;
-  document.getElementById("timer").innerText = "Time: " + seconds + "s";
-}, 1000);
-
 function newGame() {
-  currentPuzzle = (currentPuzzle + 1) % puzzles.length; // switch puzzle
+  currentPuzzle = (currentPuzzle + 1) % puzzles.length;
   createBoard(puzzles[currentPuzzle]);
   resetTimer();
 }
@@ -156,5 +152,6 @@ function resetTimer() {
   }, 1000);
 }
 
-
-createBoard();
+// Initialize game
+createBoard(puzzles[currentPuzzle]);
+resetTimer();
