@@ -37,6 +37,7 @@ function createBoard() {
 
 
 function checkSolution() {
+  highlightErrors();
   const table = document.getElementById("sudoku-board");
   let valid = true;
 
@@ -88,7 +89,7 @@ function highlightErrors() {
   for (let r = 0; r < 9; r++) {
     for (let c = 0; c < 9; c++) {
       const input = table.rows[r].cells[c].firstChild;
-      input.style.color = "black"; // reset
+      input.style.color = "red"; // reset
     }
   }
 
@@ -99,7 +100,7 @@ function highlightErrors() {
       const val = table.rows[r].cells[c].firstChild.value;
       if (val) {
         if (seen[val]) {
-          table.rows[r].cells[c].firstChild.style.color = "red";
+          table.rows[0].cells[0].firstChild.style.color = "red";
         }
         seen[val] = true;
       }
