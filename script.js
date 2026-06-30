@@ -1,19 +1,38 @@
-const puzzle = [
-  [5,3,0, 0,7,0, 0,0,0],
-  [6,0,0, 1,9,5, 0,0,0],
-  [0,9,8, 0,0,0, 0,6,0],
-
-  [8,0,0, 0,6,0, 0,0,3],
-  [4,0,0, 8,0,3, 0,0,1],
-  [7,0,0, 0,2,0, 0,0,6],
-
-  [0,6,0, 0,0,0, 2,8,0],
-  [0,0,0, 4,1,9, 0,0,5],
-  [0,0,0, 0,8,0, 0,7,9]
+// Example puzzles (0 = empty cell)
+const puzzles = [
+  [
+    [5,3,0,0,7,0,0,0,0],
+    [6,0,0,1,9,5,0,0,0],
+    [0,9,8,0,0,0,0,6,0],
+    [8,0,0,0,6,0,0,0,3],
+    [4,0,0,8,0,3,0,0,1],
+    [7,0,0,0,2,0,0,0,6],
+    [0,6,0,0,0,0,2,8,0],
+    [0,0,0,4,1,9,0,0,5],
+    [0,0,0,0,8,0,0,7,9]
+  ],
+  [
+    [0,2,0,6,0,8,0,0,0],
+    [5,8,0,0,0,9,7,0,0],
+    [0,0,0,0,4,0,0,0,0],
+    [3,7,0,0,0,0,5,0,0],
+    [6,0,0,0,0,0,0,0,4],
+    [0,0,8,0,0,0,0,1,3],
+    [0,0,0,0,2,0,0,0,0],
+    [0,0,9,8,0,0,0,3,6],
+    [0,0,0,3,0,6,0,9,0]
+  ]
 ];
 
-function createBoard() {
+let currentPuzzle = 0;
+let seconds = 0;
+let timerInterval;
+
+
+function createBoard(puzzle) {
   const table = document.getElementById("sudoku-board");
+  table.innerHTML = ""; // clear old board
+
   for (let row = 0; row < 9; row++) {
     const tr = document.createElement("tr");
     for (let col = 0; col < 9; col++) {
@@ -34,6 +53,7 @@ function createBoard() {
     table.appendChild(tr);
   }
 }
+
 
 
 function checkSolution() {
@@ -115,14 +135,26 @@ setInterval(() => {
 }, 1000);
 
 function newGame() {
-  document.getElementById("sudoku-board").innerHTML = "";
-  seconds = 0; // reset timer
-  createBoard(); // load another puzzle
+  currentPuzzle = (currentPuzzle + 1) % puzzles.length; // switch puzzle
+  createBoard(puzzles[currentPuzzle]);
+  resetTimer();
 }
 
 function resetBoard() {
   const inputs = document.querySelectorAll("input:not([disabled])");
   inputs.forEach(inp => inp.value = "");
+  resetTimer();
 }
+
+function resetTimer() {
+  clearInterval(timerInterval);
+  seconds = 0;
+  document.getElementById("timer").innerText = "Time: 0s";
+  timerInterval = setInterval(() => {
+    seconds++;
+    document.getElementById("timer").innerText = "Time: " + seconds + "s";
+  }, 1000);
+}
+
 
 createBoard();
