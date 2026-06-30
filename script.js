@@ -114,4 +114,11 @@ setInterval(() => {
   document.getElementById("timer").innerText = "Time: " + seconds + "s";
 }, 1000);
 
+function newGame() {
+  document.getElementById("sudoku-board").innerHTML = "";
+  seconds = 0; // reset timer
+  createBoard(); // load another puzzle
+}
+
+
 createBoard();
